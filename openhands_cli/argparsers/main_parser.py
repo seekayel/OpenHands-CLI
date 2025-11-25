@@ -23,6 +23,8 @@ def create_main_parser() -> argparse.ArgumentParser:
                 openhands --resume conversation-id  # Resume a conversation in CLI mode
                 openhands serve                     # Launch GUI server
                 openhands serve --gpu               # Launch GUI server with GPU support
+                openhands acp                       # Start as Agent-Client Protocol
+                                                      server for clients like Zed IDE
         """,
     )
 
@@ -52,7 +54,7 @@ def create_main_parser() -> argparse.ArgumentParser:
     # CLI arguments at top level (default mode)
     parser.add_argument("--resume", type=str, help="Conversation ID to resume")
 
-    # Only serve as subcommand
+    # Subcommands
     subparsers = parser.add_subparsers(dest="command", help="Additional commands")
 
     # Add serve subcommand
@@ -66,6 +68,11 @@ def create_main_parser() -> argparse.ArgumentParser:
     )
     serve_parser.add_argument(
         "--gpu", action="store_true", help="Enable GPU support in the Docker container"
+    )
+
+    # Add ACP subcommand
+    subparsers.add_parser(
+        "acp", help="Start OpenHands as an Agent Client Protocol (ACP) agent"
     )
 
     return parser
